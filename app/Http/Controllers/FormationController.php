@@ -12,18 +12,7 @@ class FormationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -40,7 +29,7 @@ class FormationController extends Controller
             $formation->image = $this->storeImage($request->image);
             $formation->save();
             return response()->json([
-                'status_code' => 200,
+                'status_code' => 201,
                 'status_message' => 'La formation a été ajoutée',
                 'formation' => $formation
             ]);
@@ -56,22 +45,18 @@ class FormationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Formation $formation)
     {
-        //
+        return response()->json([
+            "status_code"=>200,
+            "status_body"=>$formation
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $formation = Formation::find($id);
@@ -94,6 +79,15 @@ class FormationController extends Controller
         } catch (Exception $e) {
             return response()->json($e);
         }
+    }
+
+    public function cloturer(Formation $formation){
+        $formation->statut = "terminee";
+        $formation->update();
+        return response()->json([
+            "status_code"=>200,
+            "status_body"=>"formation cloturee"
+        ]);
     }
 
     /**

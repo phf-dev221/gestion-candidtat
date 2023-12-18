@@ -15,6 +15,7 @@ class Formation extends Model
         'debut_candidature',
         'fin_candidature',
         'duree',
+        'statut',
         'image'
     ];
 

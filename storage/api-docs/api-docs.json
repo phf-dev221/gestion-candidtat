@@ -1,0 +1,912 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "gestion de candidature",
+        "description": "Description de l'application gestion de candidature",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/store": {
+            "post": {
+                "tags": [
+                    "Formation"
+                ],
+                "summary": "Ajouter une nouvelle formation",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Données d'une nouvelle formation",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "libelle": {
+                                        "type": "string"
+                                    },
+                                    "duree": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "debut_candidature": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "fin_candidature": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "libelle",
+                                    "duree",
+                                    "description",
+                                    "debut_candidature",
+                                    "fin_candidature",
+                                    "image"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Formation ajoutée avec succès",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 201,
+                                    "status_message": "La formation a été ajoutée",
+                                    "formation": {
+                                        "libelle": "Exemple de libellé",
+                                        "duree": "Exemple de durée",
+                                        "description": "Exemple de description",
+                                        "debut_candidature": "2023-01-01",
+                                        "fin_candidature": "2023-01-31",
+                                        "image": "chemin/vers/l'image"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur lors de l'ajout de la formation",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 500,
+                                    "status_message": "Erreur lors de l'ajout de la formation"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/formation/update/{id}": {
+            "post": {
+                "tags": [
+                    "Formation"
+                ],
+                "summary": "Mettre à jour une formation existante",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "L'identifiant de la formation à mettre à jour",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Données de mise à jour de la formation",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "libelle": {
+                                        "type": "string"
+                                    },
+                                    "duree": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "debut_candidature": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "fin_candidature": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "libelle",
+                                    "duree",
+                                    "description",
+                                    "debut_candidature",
+                                    "fin_candidature"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Formation mise à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "status_message": "La formation a été modifiée",
+                                    "formation": {
+                                        "libelle": "Nouvel exemple de libellé",
+                                        "duree": "Nouvel exemple de durée",
+                                        "description": "Nouvel exemple de description",
+                                        "debut_candidature": "2023-02-01",
+                                        "fin_candidature": "2023-02-28",
+                                        "image": "chemin/vers/nouvelle_image"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur lors de la mise à jour de la formation",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 500,
+                                    "status_message": "Erreur lors de la mise à jour de la formation"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/formation/show/{formation}": {
+            "get": {
+                "tags": [
+                    "Formation"
+                ],
+                "summary": "Afficher les détails d'une formation",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "formation",
+                        "required": true,
+                        "description": "L'objet de formation à afficher",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès de la récupération des détails de la formation",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "status_body": {
+                                        "libelle": "Exemple de libellé",
+                                        "duree": "Exemple de durée",
+                                        "description": "Exemple de description",
+                                        "debut_candidature": "2023-01-01",
+                                        "fin_candidature": "2023-01-31",
+                                        "image": "chemin/vers/l'image"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Formation non trouvée",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 404,
+                                    "status_message": "Formation non trouvée"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/formation/delete/{formation}": {
+            "post": {
+                "tags": [
+                    "Formation"
+                ],
+                "summary": "Supprimer une formation",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "formation",
+                        "required": true,
+                        "description": "L'objet de formation à supprimer",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Formation supprimée avec succès",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "status_message": "La formation a été supprimée",
+                                    "article": {
+                                        "libelle": "Exemple de libellé supprimé",
+                                        "duree": "Exemple de durée supprimé",
+                                        "description": "Exemple de description supprimée",
+                                        "debut_candidature": "2023-01-01",
+                                        "fin_candidature": "2023-01-31",
+                                        "image": "chemin/vers/l'image_supprimee"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Formation non trouvée",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 404,
+                                    "status_message": "Formation non trouvée"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/formation/cloturer/{formation}": {
+            "post": {
+                "tags": [
+                    "Formation"
+                ],
+                "summary": "Clôturer une formation",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "formation",
+                        "required": true,
+                        "description": "L'objet de formation à clôturer",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Formation clôturée avec succès",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "status_body": "formation clôturee"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Formation non trouvée",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 404,
+                                    "status_message": "Formation non trouvée"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/candidature/index": {
+            "get": {
+                "tags": [
+                    "Candidature"
+                ],
+                "summary": "Lister toutes les candidatures",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès de la récupération de la liste des candidatures",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "candidatures_liste": [
+                                        {
+                                            "user_id": 1,
+                                            "formation_id": 1,
+                                            "etat": "accepter",
+                                            "created_at": "2023-01-15T12:00:00",
+                                            "updated_at": "2023-01-15T12:00:00"
+                                        },
+                                        {
+                                            "user_id": 2,
+                                            "formation_id": 2,
+                                            "etat": "refuser",
+                                            "created_at": "2023-02-01T12:00:00",
+                                            "updated_at": "2023-02-01T12:00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/candidature/acceptees": {
+            "get": {
+                "tags": [
+                    "Candidature"
+                ],
+                "summary": "Lister les candidatures acceptées",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès de la récupération de la liste des candidatures acceptées",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "candidatures_acceptees": [
+                                        {
+                                            "user_id": 1,
+                                            "formation_id": 1,
+                                            "etat": "accepter",
+                                            "created_at": "2023-01-15T12:00:00",
+                                            "updated_at": "2023-01-15T12:00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/candidature/refusees": {
+            "get": {
+                "tags": [
+                    "Candidature"
+                ],
+                "summary": "Lister les candidatures refusées",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès de la récupération de la liste des candidatures refusées",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "candidatures_refusees": [
+                                        {
+                                            "user_id": 2,
+                                            "formation_id": 2,
+                                            "etat": "refuser",
+                                            "created_at": "2023-02-01T12:00:00",
+                                            "updated_at": "2023-02-01T12:00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/candidature/refuser/{candidature}": {
+            "post": {
+                "tags": [
+                    "Candidature"
+                ],
+                "summary": "Refuser une candidature",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "candidature",
+                        "required": true,
+                        "description": "L'objet de candidature à refuser",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Candidature refusée avec succès",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "status_body": "Candidature refusée"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Candidature non trouvée",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 404,
+                                    "status_message": "Candidature non trouvée"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/candidature/show/{candidature}": {
+            "get": {
+                "tags": [
+                    "Candidature"
+                ],
+                "summary": "Afficher les détails d'une candidature",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "candidature",
+                        "required": true,
+                        "description": "L'objet de candidature à afficher",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès de la récupération des détails de la candidature",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "status_body": {
+                                        "user_id": 1,
+                                        "formation_id": 1,
+                                        "etat": "en attente",
+                                        "created_at": "2023-03-01T12:00:00",
+                                        "updated_at": "2023-03-01T12:00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Candidature non trouvée",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 404,
+                                    "status_message": "Candidature non trouvée"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/candidature/store": {
+            "post": {
+                "tags": [
+                    "Candidature"
+                ],
+                "summary": "Ajouter une candidature",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Données d'une nouvelle candidature",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "formation_id": 1
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succès de l'ajout de la candidature",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "status_message": "Candidature ajoutée avec succès",
+                                    "status_body": {
+                                        "user_id": 1,
+                                        "formation_id": 1,
+                                        "etat": "accepter",
+                                        "created_at": "2023-03-01T12:00:00",
+                                        "updated_at": "2023-03-01T12:00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Formation cloturée",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 404,
+                                    "message": "Formation cloturée"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur lors de l'ajout de la candidature",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 500,
+                                    "status_message": "Erreur lors de l'ajout de la candidature"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/candidature/user/{id}": {
+            "get": {
+                "tags": [
+                    "Candidature"
+                ],
+                "summary": "Afficher les candidatures d'un utilisateur",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "ID de l'utilisateur",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès de la récupération des candidatures de l'utilisateur",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "status_body": [
+                                        {
+                                            "user_id": 1,
+                                            "formation_id": 1,
+                                            "etat": "accepter",
+                                            "created_at": "2023-03-01T12:00:00",
+                                            "updated_at": "2023-03-01T12:00:00"
+                                        },
+                                        {
+                                            "user_id": 1,
+                                            "formation_id": 2,
+                                            "etat": "accepter",
+                                            "created_at": "2023-03-02T12:00:00",
+                                            "updated_at": "2023-03-02T12:00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Accès refusé",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 403,
+                                    "message": "Accès refusé"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentification"
+                ],
+                "summary": "Inscrire un utilisateur",
+                "requestBody": {
+                    "description": "Données d'inscription d'un utilisateur",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "adresse": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succès de l'inscription",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "status_message": "Utilisateur ajouté avec succès",
+                                    "status_body": {
+                                        "name": "Nom de l'utilisateur",
+                                        "telephone": "Numéro de téléphone",
+                                        "adresse": "Adresse de l'utilisateur",
+                                        "email": "email@exemple.com"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur lors de l'inscription",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 500,
+                                    "status_message": "Erreur lors de l'inscription"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentification"
+                ],
+                "summary": "Connecter un utilisateur",
+                "requestBody": {
+                    "description": "Données de connexion d'un utilisateur",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succès de la connexion",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "utlisateur": {
+                                        "name": "Nom de l'utilisateur",
+                                        "telephone": "Numéro de téléphone",
+                                        "adresse": "Adresse de l'utilisateur",
+                                        "email": "email@exemple.com"
+                                    },
+                                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...",
+                                    "token_type": "bearer",
+                                    "expires_in": 3600
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 401,
+                                    "error": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentification"
+                ],
+                "summary": "Déconnecter un utilisateur",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès de la déconnexion",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Successfully logged out"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Authentification"
+                ],
+                "summary": "Actualiser un jeton d'accès",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès de l'actualisation du jeton",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status_code": 200,
+                                    "utlisateur": {
+                                        "name": "Nom de l'utilisateur",
+                                        "telephone": "Numéro de téléphone",
+                                        "adresse": "Adresse de l'utilisateur",
+                                        "email": "email@exemple.com"
+                                    },
+                                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...",
+                                    "token_type": "bearer",
+                                    "expires_in": 3600
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/me": {
+            "post": {
+                "tags": [
+                    "Authentification"
+                ],
+                "summary": "Obtenir l'utilisateur authentifié",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès de la récupération de l'utilisateur authentifié",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "name": "Nom de l'utilisateur",
+                                    "telephone": "Numéro de téléphone",
+                                    "adresse": "Adresse de l'utilisateur",
+                                    "email": "email@exemple.com"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

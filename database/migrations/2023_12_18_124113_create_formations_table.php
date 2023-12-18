@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('debut_candidature');
             $table->date('fin_candidature');
             $table->integer('duree');
+            $table->enum('statut',['en cours, terminee'])->default('en cours');
             $table->timestamps();
         });
     }
