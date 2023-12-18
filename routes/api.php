@@ -16,12 +16,16 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 /*route pour formation*/
 Route::post('store',  [FormationController::class, 'store']);
+Route::post('formation/update/{id}',  [FormationController::class, 'update']);
+Route::post('formation/delete/{formation}',  [FormationController::class, 'destroy']);
+
+
 
 /*route pour auth*/
 Route::post('register',  [AuthController::class, 'register']);
