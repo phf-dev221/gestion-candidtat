@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreFormationRequest;
+use App\Http\Requests\UpdateFormationRequest;
 
 class FormationController extends Controller
 {
@@ -13,7 +14,15 @@ class FormationController extends Controller
      * Display a listing of the resource.
      */
 
+public function index(){
+    $formations = Formation::where('statut','en cours')->get();
 
+    return response()->json([
+        'status_code' => 201,
+        'status_message' => 'liste des fformations en cours',
+        'formation' => $formations
+    ]); 
+}
     /**
      * Store a newly created resource in storage.
      */
@@ -57,7 +66,7 @@ class FormationController extends Controller
      * Show the form for editing the specified resource.
      */
 
-    public function update(Request $request, $id)
+    public function update(UpdateFormationRequest $request, $id)
     {
         $formation = Formation::find($id);
         
