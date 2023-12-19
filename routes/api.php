@@ -10,6 +10,8 @@ use App\Http\Controllers\AuthController;
 
 /*route pour formation*/
 Route::get('formation/index', [FormationController::class, 'index']);
+Route::get('users', [AuthController::class, 'index']);
+
 
 Route::middleware(['auth:api', 'access:admin'])->group(function () {
 
